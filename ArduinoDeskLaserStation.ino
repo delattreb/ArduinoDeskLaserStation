@@ -3,62 +3,30 @@
 // Visual Micro is in vMicro>General>Tutorial Mode
 // 
 /*
-	Name:       reception.ino
-	Created:	09/10/2018 13:57:02
-	Author:     LINKT\thomasc
+Name:       reception.ino
+Created:	09/10/2018 13:57:02
+Author:     LINKT\thomasc
 */
 
 // Define User Types below here or use a .h file
 //
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
+#include "var.h"
 
-// Define Function Prototypes that use User Types below here or use a .h file
-//
-
-
-// Define Functions below here or use other .ino or cpp files
-//
-//Reception
-
-#define SERIALBAUDS 9600
-static int const C_AVANT = 5;
-static int const C_EPAULE = 6;
-static int const C_PISTOLET = 7;
-int i = 0;
-bool tab[13] = { 1,1,1,1,1,1,1,0,0,0,0,0,0 };
-String text = "";
-
-//laser
-#define PULSE 50;
-static int const LASER = 4;
-static int const TIME = 4000;
-int j = 0;
-bool tabID[13] = { 1,1,1,1,1,1,1,0,0,0,1,1,0 };
-
-
-
-//lcd
-#define BACKLIGHT_PIN 13
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
-
-
-
-// The setup() function runs once each time the micro-controller starts
 void setup()
 {
 	lcd.begin(16, 2);
 	;	pinMode(int(LASER), OUTPUT);
 	j = 0;
 
-
-	// Print a message to the LCD.
-
-	Serial.begin(9600);
+	Serial.begin(SERIALBAUDS);
 	while (!Serial) {
 		;
 	}
-	i = 0;
+	i_C_AVANT = 0;
+	i_C_EPAULE = 0;
+	i_C_PISTOLET = 0;
 	pinMode(int(C_AVANT), INPUT);
 
 
@@ -74,12 +42,9 @@ void one()
 	digitalWrite(int(LASER), HIGH);
 
 }
-// Add the main program code into the continuous loop() function
-void loop()
-{
-	//search entete
+int recepteur(int i, int cible, bool tab[]) {
 	if (i < 7) {
-		if (digitalRead(int(C_AVANT))) {
+		if (digitalRead(cible)) {
 			//si 1 increment
 			i++;
 		}
@@ -90,24 +55,34 @@ void loop()
 	}//si find entete
 	else {
 		//ecriture dans le tableau du resultat
-		tab[i] = digitalRead(int(C_AVANT));
+		tab[i] = digitalRead(cible);
 		i++;
 	}
+	return i;
 
+}
 
-	if (i == 13) {
+// Add the main program code into the continuous loop() function
+void loop()
+{
+
+	i_C_AVANT = recepteur(i_C_AVANT, int(C_AVANT), tab_C_AVANT);
+	i_C_EPAULE = recepteur(i_C_EPAULE, int(C_EPAULE), tab_C_EPAULE);
+	i_C_PISTOLET = recepteur(i_C_PISTOLET, int(C_PISTOLET), tab_C_PISTOLET);
+
+	if (i_C_AVANT == 13) {
 		//si ensemble trouve affichage
 
 		for (size_t i = 0; i < 13; i++)
 		{
 			//concat entete +id en string
-			text.concat(String(tab[i]));
+			text.concat(String(tab_C_AVANT[i]));
 		}
 		//ecriture log
 		lcd.home();                   // go home
 		lcd.print(text);
 		text = "";
-		i = 0;
+		i_C_AVANT = 0;
 		zero();
 		delay(int(TIME));
 		lcd.home();                   // go home
@@ -124,4 +99,5 @@ void loop()
 		}
 		j++;
 	}
+	//delay(0);
 }
