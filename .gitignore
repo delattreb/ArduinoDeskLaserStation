@@ -31,8 +31,6 @@
 *.out
 *.app
 
-ArduinoDeskLaserStation\.vcxproj
-
 \.vs/
 
 __vm/
@@ -40,3 +38,5 @@ __vm/
 ArduinoDeskLaserStation\.vcxproj\.filters
 
 ArduinoDeskLaserStation\.vcxproj\.user
+
+CppProperties\.json
