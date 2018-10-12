@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+ArduinoDeskLaserStation\.vcxproj
+
+\.vs/
+
+__vm/
+
+ArduinoDeskLaserStation\.vcxproj\.filters
+
+ArduinoDeskLaserStation\.vcxproj\.user
