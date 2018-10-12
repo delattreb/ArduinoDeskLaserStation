@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+\.vs/
+
+__vm/
+
+ArduinoDeskLaserStation\.vcxproj\.filters
+
+ArduinoDeskLaserStation\.vcxproj\.user
+
+CppProperties\.json
