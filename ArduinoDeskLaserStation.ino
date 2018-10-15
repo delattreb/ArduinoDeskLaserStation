@@ -10,7 +10,7 @@ Author:     LINKT\thomasc
 
 // Define User Types below here or use a .h file
 //
-#include <Wire.h> 
+#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Adafruit_NeoPixel.h>
 #include "var.h"
