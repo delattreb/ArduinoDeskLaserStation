@@ -1,6 +1,9 @@
 #pragma once
 #define SERIALBAUDS 9600
 
+#define ESP_RX 8
+#define ESP_TX 9
+#define ESP_START 12
 
 //Led
 #define PINCOLOR 3
@@ -23,11 +26,17 @@ bool tab_C_PISTOLET[13] = { 1,1,1,1,1,1,1,0,0,0,0,0,0 };
 
 
 //laser
-#define PULSE 50;
-static int const LASER = 4;
-static int const TIME = 500;
+#define PULSE 50
+#define LASER 4
+int TIME = 500;
 bool tabID[13] = { 1,1,1,1,1,1,1,0,0,0,1,1,0 };
 
 //lcd
 #define BACKLIGHT_PIN 13
 #define LCDADDR 0x27
+
+#define CMD_START "_"
+#define CMD_TEAM "T"
+#define CMD_PARTY "P"
+#define CMD_GAME "G"
+String dialog = "";
